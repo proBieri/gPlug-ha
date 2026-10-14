@@ -7,10 +7,10 @@
 # autoexec.be already present on the device stays untouched.
 #
 # gplug_ha.be and gplug_ha_setup.be are precompiled to bytecode (.bec) before
-# they're packed into the .tapp - third parties with filesystem access to the
-# gPlug can no longer see readable Berry source this way. This is not
-# encryption (bytecode can be disassembled with effort), but it does prevent
-# simply opening/reading the file. The "berry" compiler needed for this is
+# they're packed into the .tapp - the gPlug then loads ready-made bytecode
+# instead of compiling the source itself on every boot, which saves the heap
+# the on-device compiler would need and shortens startup. The readable source
+# is this repository. The "berry" compiler needed for this is
 # built by tools/build_berry_cli.sh from the Tasmota Berry source matching
 # the exact gPlug firmware (once, then cached).
 #
