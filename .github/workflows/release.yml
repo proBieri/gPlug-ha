@@ -1,0 +1,58 @@
+# Builds gplug_ha.tapp and attaches it to the GitHub release of a tag.
+#
+# Runs automatically when a v* tag is pushed (creating the release if it
+# doesn't exist yet), or manually via "Run workflow" for an existing tag.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Existing tag to build and attach the .tapp to (e.g. v1.0)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  tapp:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+
+      # The status badge's update check compares the release tag against
+      # self.version - a mismatch would make devices running this exact
+      # release report an "update available" to itself.
+      - name: Check version matches tag
+        run: |
+          norm() { IFS=. read -r a b c <<< "$1"; echo "${a:-0}.${b:-0}.${c:-0}"; }
+          code=$(sed -n 's/.*self\.version = "\([^"]*\)".*/\1/p' berry/gplug_ha.be)
+          if [ "$(norm "$code")" != "$(norm "${TAG#v}")" ]; then
+            echo "::error::berry/gplug_ha.be has version $code, tag is $TAG"
+            exit 1
+          fi
+
+      - name: Cache berry CLI
+        uses: actions/cache@v4
+        with:
+          path: berry/tools/.cache
+          key: berry-cli-${{ hashFiles('berry/tools/build_berry_cli.sh') }}
+
+      - name: Build gplug_ha.tapp
+        run: ./berry/build_tapp.sh
+
+      - name: Attach to release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            gh release upload "$TAG" berry/gplug_ha.tapp --clobber
+          else
+            gh release create "$TAG" berry/gplug_ha.tapp --title "$TAG" --generate-notes
+          fi
