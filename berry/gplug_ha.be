@@ -49,7 +49,7 @@ class GplugMeterBridge
   var last_state_publish_utc, last_diag_publish_utc, last_power_publish_utc, last_energy_publish_utc
 
   def init()
-    self.version = "1.0.0"
+    self.version = "1.0.1"
     self.repo_url = "https://github.com/proBieri/gPlug-ha"
     self.stale_after_s = 60          # beyond this, the smart meter is considered "ok=false"
 

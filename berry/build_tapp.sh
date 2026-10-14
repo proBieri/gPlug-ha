@@ -31,8 +31,8 @@ BERRY_BIN=$(./tools/build_berry_cli.sh)
 
 # Strip comments from the shipped files (more compact .tapp) - quote-aware,
 # so '#' inside Berry strings isn't mistaken for the start of a comment.
-python3 "$(dirname "$0")/strip_comments.py" gplug_ha.be > "$STAGE/gplug_ha.be"
-python3 "$(dirname "$0")/strip_comments.py" gplug_ha_setup.be > "$STAGE/gplug_ha_setup.be"
+python3 strip_comments.py gplug_ha.be > "$STAGE/gplug_ha.be"
+python3 strip_comments.py gplug_ha_setup.be > "$STAGE/gplug_ha_setup.be"
 
 # -g (named globals) when precompiling: without this flag, the .bec stores an
 # index-based snapshot of the globals known at compile time. For classes that
