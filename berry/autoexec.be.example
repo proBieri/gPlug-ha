@@ -1,0 +1,11 @@
+#- autoexec.be - executed automatically by Tasmota at boot.
+   Only needed for single-file installation (if the installed firmware does
+   not automatically scan for *.tapp): upload gplug_ha.be, gplug_ha_setup.be
+   AND autoexec.be to internal flash storage (root directory) via the
+   Tasmota web UI under "Console" -> file editor (or "Manage filesystem").
+   gplug_ha_setup.be is only ever loaded by gplug_ha.be itself on first run
+   (or after script.txt changes) - it's not loaded from here. If an
+   autoexec.be already exists on the device, add the load(...) line there
+   instead of overwriting this file. -#
+
+load("gplug_ha.be")
