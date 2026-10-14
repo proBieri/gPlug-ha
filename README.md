@@ -140,3 +140,7 @@ the time of the gap.
 ## License
 
 [MIT](LICENSE)
+
+This is an independent community project, not affiliated with or endorsed by the makers of the gPlug,
+Home Assistant / Nabu Casa, or the Tasmota project. All product names and marks belong to their
+respective owners.

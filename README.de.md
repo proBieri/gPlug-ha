@@ -148,3 +148,7 @@ Zeitpunkt der Lücke.
 ## Lizenz
 
 [MIT](LICENSE)
+
+Dies ist ein unabhängiges Community-Projekt, das weder mit den Herstellern des gPlug noch mit
+Home Assistant / Nabu Casa oder dem Tasmota-Projekt verbunden ist oder von ihnen unterstützt wird. Alle
+Produktnamen und Marken gehören ihren jeweiligen Inhabern.
